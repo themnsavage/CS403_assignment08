@@ -35,21 +35,21 @@ max(Op, Ref, Max) :- (
     ).
 
 total(Op, Ref, Total) :- (
-    Op=('=='), findall(Z, (pay(X, Y, Z), Z=:=Ref), List),  length(List, Count);
-    Op=('!='), findall(Z, (pay(X, Y, Z), Z=\=Ref), List),  length(List, Count);
-    Op=('>'), findall(Z, (pay(X, Y, Z), Z>Ref), List),  length(List, Count);
-    Op=('>='), findall(Z, (pay(X, Y, Z), Z>=Ref), List),  length(List, Count);
-    Op=('<'), findall(Z, (pay(X, Y, Z), Z<Ref), List),  length(List, Count);
-    Op=('<='), findall(Z, (pay(X, Y, Z), Z=<Ref), List),  length(List, Count)
+    Op=('=='), findall(Z, (pay(X, Y, Z), Z=:=Ref), List),  list_total(List, Total);
+    Op=('!='), findall(Z, (pay(X, Y, Z), Z=\=Ref), List),  list_total(List, Total);
+    Op=('>'), findall(Z, (pay(X, Y, Z), Z>Ref), List),  list_total(List, Total);
+    Op=('>='), findall(Z, (pay(X, Y, Z), Z>=Ref), List),  list_total(List, Total);
+    Op=('<'), findall(Z, (pay(X, Y, Z), Z<Ref), List),  list_total(List, Total);
+    Op=('<='), findall(Z, (pay(X, Y, Z), Z=<Ref), List),  list_total(List, Total)
     ).
 
 avg(Op, Ref, Avg) :- (
-    Op=('=='), findall(Z, (pay(X, Y, Z), Z=:=Ref), List),  length(List, Count);
-    Op=('!='), findall(Z, (pay(X, Y, Z), Z=\=Ref), List),  length(List, Count);
-    Op=('>'), findall(Z, (pay(X, Y, Z), Z>Ref), List),  length(List, Count);
-    Op=('>='), findall(Z, (pay(X, Y, Z), Z>=Ref), List),  length(List, Count);
-    Op=('<'), findall(Z, (pay(X, Y, Z), Z<Ref), List),  length(List, Count);
-    Op=('<='), findall(Z, (pay(X, Y, Z), Z=<Ref), List),  length(List, Count)
+    Op=('=='), findall(Z, (pay(X, Y, Z), Z=:=Ref), List),  list_avg(List, Avg);
+    Op=('!='), findall(Z, (pay(X, Y, Z), Z=\=Ref), List),  list_avg(List, Avg);
+    Op=('>'), findall(Z, (pay(X, Y, Z), Z>Ref), List),  list_avg(List, Avg);
+    Op=('>='), findall(Z, (pay(X, Y, Z), Z>=Ref), List),  list_avg(List, Avg);
+    Op=('<'), findall(Z, (pay(X, Y, Z), Z<Ref), List),  list_avg(List, Avg);
+    Op=('<='), findall(Z, (pay(X, Y, Z), Z=<Ref), List),  list_avg(List, Avg)
     ).
 
 list_min([L|Ls], Min) :-
@@ -64,3 +64,14 @@ list_max([], R, R).
 list_max([X|Xs], WK, R):- X >  WK, list_max(Xs, X, R). 
 list_max([X|Xs], WK, R):- X =< WK, list_max(Xs, WK, R).
 list_max([X|Xs], R):- list_max(Xs, X, R).
+
+list_total([], 0).
+list_total([H|T], Sum) :-
+   list_total(T, Rest),
+   Sum is H + Rest.
+
+list_avg( List, Average ):- 
+    list_total( List, Sum ),
+    length( List, Length ),
+    Length > 0, 
+    Average is Sum / Length.
