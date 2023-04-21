@@ -8,12 +8,12 @@ count(Op, Ref, Count) :- (
     ).
 
 list(Op, Ref, List) :- (
-    Op=('=='), findall(Z, (pay(X, Y, Z), Z=:=Ref), List);
-    Op=('!='), findall(Z, (pay(X, Y, Z), Z=\=Ref), List);
-    Op=('>'), findall(Z, (pay(X, Y, Z), Z>Ref), List);
-    Op=('>='), findall(Z, (pay(X, Y, Z), Z>=Ref), List);
-    Op=('<'), findall(Z, (pay(X, Y, Z), Z<Ref), List);
-    Op=('<='), findall(Z, (pay(X, Y, Z), Z=<Ref), List)
+    Op=('=='), findall([X,Y,Z], (pay(X, Y, Z), Z=:=Ref), List);
+    Op=('!='), findall([X,Y,Z], (pay(X, Y, Z), Z=\=Ref), List);
+    Op=('>'), findall([X,Y,Z], (pay(X, Y, Z), Z>Ref), List);
+    Op=('>='), findall([X,Y,Z], (pay(X, Y, Z), Z>=Ref), List);
+    Op=('<'), findall([X,Y,Z], (pay(X, Y, Z), Z<Ref), List);
+    Op=('<='), findall([X,Y,Z], (pay(X, Y, Z), Z=<Ref), List)
     ).
 
 min(Op, Ref, Min) :- (
